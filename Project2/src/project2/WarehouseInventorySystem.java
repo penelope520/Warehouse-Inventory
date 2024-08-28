@@ -21,20 +21,37 @@ public class WarehouseInventorySystem{
     JComboBox box=new JComboBox(new String[]{"Administrator","Customer"});
     JButton login=new JButton("Login");
     JButton signUp=new JButton("SignUp");
+    ImageIcon background=new ImageIcon("src/project2/Network-Inventory-Management.png");
+    JLabel bgl=new JLabel(background);
     
     public void Maingui(){
-        Maingui.setBounds(450, 200, 550, 350);
+        
+        bgl.setSize(background.getIconWidth(),background.getIconHeight());
+        Maingui.getLayeredPane().add(bgl,new Integer(Integer.MIN_VALUE));
+        
+        JPanel pan=(JPanel)Maingui.getContentPane();
+        pan.setOpaque(false);
+        pan.setLayout(null);
+        
+        pan.add(title);
+        pan.add(login);
+        pan.add(signUp);
+        
+        int frameWidth=background.getIconWidth();
+        int frameHeight=background.getIconHeight();
+        int buttonWidth=150;
+        int buttonHeight=50;
+        int buttonX=(frameWidth-buttonWidth)/2;
+        int loginButton=(frameHeight-(2*buttonHeight+20))/2;
+        int signUpButton=loginButton+buttonHeight+20;
+        
+        login.setBounds(buttonX,loginButton, buttonWidth, buttonHeight);
+        signUp.setBounds(buttonX, signUpButton,buttonWidth, buttonHeight);
+        title.setFont(new Font("Arial", Font.BOLD, 40));
+        title.setBounds(100, 100, 800, 50);
+        title.setForeground(Color.WHITE);
         Maingui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Maingui.setLayout(new GridLayout(6,2,10,10));
-        
-        Maingui.add(title);
-        Maingui.add(login);
-        Maingui.add(signUp);
-        
-        title.setFont(new Font("Arial", Font.BOLD, 16));
-        Maingui.add(new JLabel(""));
-        
-        
+        Maingui.setSize(background.getIconWidth(),background.getIconHeight());
         Maingui.setLocationRelativeTo(null);
         Maingui.setVisible(true);
     }
@@ -43,14 +60,5 @@ public class WarehouseInventorySystem{
         WarehouseInventorySystem wis=new WarehouseInventorySystem();
         wis.Maingui();
         
-    }
-    class Background extends JPanel{
-        private Image backgroundImage;
-        
-        protected void paintComonent(Graphics g){
-            backgroundImage = new ImageIcon("Network-Inventory-Management.png").getImage();
-            g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
-        }
-    
     }
 }
