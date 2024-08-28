@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class WarehouseInventorySystem{
 
-    JFrame Maingui=new JFrame("Userlogin System");
+    JFrame Maingui=new JFrame("MainPage System");
     JLabel title=new JLabel("Online Shopping/Management System");
     JLabel username=new JLabel("Username: ");
     JLabel password=new JLabel("Password");
