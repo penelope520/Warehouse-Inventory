@@ -15,7 +15,7 @@ public class Login {
     JLabel username=new JLabel("Username: ");
     JLabel password=new JLabel("Password: ");
     JTextField name=new JTextField();
-    JTextField pwd=new JPasswordField();
+    JPasswordField pwd=new JPasswordField();
     JButton login=new JButton("Login");
     JButton signUp=new JButton("SignUp");
     JButton cancel=new JButton("Cancel");
@@ -36,6 +36,7 @@ public class Login {
         pan.add(name);
         pan.add(password);
         pan.add(pwd);
+        pan.add(login);
         pan.add(cancel);
         
         int bgWidth = background.getIconWidth();
@@ -44,12 +45,14 @@ public class Login {
         title.setFont(new Font("Arial", Font.BOLD, 40));
         title.setBounds(100, 100, 800, 50);
         title.setForeground(Color.WHITE);
-        username.setBounds(bgWidth/3-100, bgHeight/2-60, 100, 30);
-        name.setBounds(bgWidth/3+20, bgHeight/2-60, 200, 30);
-        password.setBounds(bgWidth/3-100, bgHeight/2, 100, 30);
-        pwd.setBounds(bgWidth, bgHeight/2, 200, 30);
-        login.setBounds(bgWidth/2-120, bgHeight/2+50, 100, 30); 
-        cancel.setBounds(bgWidth/2+20, bgHeight/2+50, 100, 30);
+        username.setBounds(bgWidth/3-50, bgHeight/2-70, 100, 30);
+        username.setForeground(Color.WHITE);
+        name.setBounds(bgWidth/3+90, bgHeight/2-70, 270, 30);
+        password.setBounds(bgWidth/3-50, bgHeight/2-10, 100, 30);
+        password.setForeground(Color.WHITE);
+        pwd.setBounds(bgWidth/3+90, bgHeight/2-10, 270, 30);
+        login.setBounds(bgWidth/2-120, bgHeight/2+70, 100, 30); 
+        cancel.setBounds(bgWidth/2+20, bgHeight/2+70, 100, 30);
         Logingui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Logingui.setSize(background.getIconWidth(),background.getIconHeight());
         Logingui.setLocationRelativeTo(null);
