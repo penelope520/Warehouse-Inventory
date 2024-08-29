@@ -18,6 +18,7 @@ public class Login {
     JPasswordField pwd=new JPasswordField();
     JButton login=new JButton("Login");
     JButton signUp=new JButton("SignUp");
+    JLabel error = new JLabel("");
     JButton cancel=new JButton("Cancel");
     ImageIcon background=new ImageIcon("src/project2/Network-Inventory-Management.png");
     JLabel bgl=new JLabel(background);
@@ -38,6 +39,7 @@ public class Login {
         pan.add(pwd);
         pan.add(login);
         pan.add(cancel);
+        pan.add(error);
         
         int bgWidth = background.getIconWidth();
         int bgHeight = background.getIconHeight();
@@ -57,8 +59,29 @@ public class Login {
         Logingui.setSize(background.getIconWidth(),background.getIconHeight());
         Logingui.setLocationRelativeTo(null);
         Logingui.setVisible(true);
-    }
-    public static void main(String[] args) {
-        new Login().LoginGui();
+        
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Logingui.dispose();
+                new WarehouseInventorySystem().Maingui(); // Reopen the main GUI
+            }
+        });
+        
+        login.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String username=name.getText();
+                String paassword=new String(pwd.getPassword());
+                
+                User user=userService.verify(username,password);
+                if(user !=null){
+                    if(user instanceof Admin){
+                        //Admin
+                    }else
+                        //Customer
+                }else
+                    error.setText("Invalid username or password");
+            }
+        });
     }
 }

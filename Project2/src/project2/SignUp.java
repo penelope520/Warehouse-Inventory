@@ -6,8 +6,8 @@ package project2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SignUp {
     JFrame SignUpgui=new JFrame("UserSignUp System");
@@ -60,21 +60,69 @@ public class SignUp {
         ConformPW.setBounds(bgWidth / 3 - 50, bgHeight / 2 + 10, 150, 30);
         cpwd.setBounds(bgWidth / 3 + 90, bgHeight / 2 + 10, 270, 30);
         error.setForeground(Color.RED);
-        error.setBounds(bgWidth / 3 + 370, bgHeight / 2 + 10, 200, 30);
         usertype.setBounds(bgWidth / 3 - 50, bgHeight / 2 + 60, 150, 30);
         box.setBounds(bgWidth / 3 + 90, bgHeight / 2 + 60, 270, 30);
         signUp.setBounds(bgWidth / 2 - 120, bgHeight / 2 + 140, 100, 30);
         cancel.setBounds(bgWidth / 2 + 20, bgHeight / 2 + 140, 100, 30);
         
         new StartEvents(pwd, cpwd, error, name);
+
         
         SignUpgui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         SignUpgui.setSize(background.getIconWidth(),background.getIconHeight());
         SignUpgui.setLocationRelativeTo(null);
         SignUpgui.setVisible(true);
+        
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SignUpgui.dispose();
+                new WarehouseInventorySystem().Maingui(); // Reopen the main GUI
+            }
+        });
+        
+        signUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = name.getText();
+                String password = new String(pwd.getPassword());
+                String confirmPassword = new String(cpwd.getPassword());
+                String role = (String) box.getSelectedItem();
+
+                if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                    error.setText("Please fill in all fields");
+                } else if (!password.equals(confirmPassword)) {
+                    error.setText("Passwords do not match");
+                } else if (isUsernameTaken(username)) {
+                    error.setText("Username is already taken");
+                } else {
+                    User user = createUser(username, password, role);
+                    userService.registerUser(user);
+                    error.setForeground(Color.GREEN);
+                    error.setText("Registration successful!");
+
+                    SignUpgui.dispose(); // Close the sign-up GUI
+                    new WarehouseInventorySystem().Maingui(); // Reopen the main GUI
+                }
+            }
+        });
     }
     
-     public static void main(String[] args) {
-        new SignUp().SignUpGui();
+    private boolean isUsernameTaken(String username) {
+        for (User user : userService.getAllUsers()) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
+    
+   private User createUser(String username, String password, String role) {
+        Inventory inventory = new Inventory(new FileProductRepository());
+        if (role.equals("Administrator")) {
+            return new Admin(username, password, inventory);
+        } else {
+            return new Customer(username, password, inventory);
+        }
+    } 
 }

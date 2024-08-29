@@ -54,6 +54,22 @@ public class WarehouseInventorySystem{
         Maingui.setSize(background.getIconWidth(),background.getIconHeight());
         Maingui.setLocationRelativeTo(null);
         Maingui.setVisible(true);
+        
+        login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maingui.dispose(); // Close the main GUI
+                new Login().LoginGui(); // Open the login GUI
+            }
+        });
+        
+        signUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maingui.dispose(); // Close the main GUI
+                new SignUp().SignUpGui(); // Open the sign-up GUI
+            }
+        });
     }
     
     public static void main(String[] args) {
