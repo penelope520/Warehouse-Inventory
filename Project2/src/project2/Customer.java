@@ -4,10 +4,21 @@
  */
 package project2;
 
-/**
- *
- * @author Administrator
- */
-public class Customer {
+import javax.swing.*;
+
+public class Customer extends User{
+    public Customer(String username, String password) {
+        super(username, password);
+    }
     
+    public void show(){
+        JFrame customerFrame = new JFrame("Customer Dashboard");
+        JLabel label = new JLabel("Welcome, Customer!");
+        customerFrame.add(label);
+
+        customerFrame.setSize(400, 200);
+        customerFrame.setLocationRelativeTo(null);
+        customerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        customerFrame.setVisible(true);
+    }
 }

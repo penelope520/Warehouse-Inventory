@@ -64,24 +64,9 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Logingui.dispose();
-                new WarehouseInventorySystem().Maingui(); // Reopen the main GUI
+                new WarehouseInventorySystem().Maingui(); 
             }
         });
         
-        login.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                String username=name.getText();
-                String paassword=new String(pwd.getPassword());
-                
-                User user=userService.verify(username,password);
-                if(user !=null){
-                    if(user instanceof Admin){
-                        //Admin
-                    }else
-                        //Customer
-                }else
-                    error.setText("Invalid username or password");
-            }
-        });
     }
 }

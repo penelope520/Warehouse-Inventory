@@ -26,6 +26,8 @@ public class SignUp {
     ImageIcon background=new ImageIcon("src/project2/Network-Inventory-Management.png");
     JLabel bgl=new JLabel(background);
     
+    private UserService uservice=new UserService();
+    
     public void SignUpGui(){
         bgl.setSize(background.getIconWidth(),background.getIconHeight());
         SignUpgui.getLayeredPane().add(bgl,new Integer(Integer.MIN_VALUE));
@@ -72,57 +74,31 @@ public class SignUp {
         SignUpgui.setSize(background.getIconWidth(),background.getIconHeight());
         SignUpgui.setLocationRelativeTo(null);
         SignUpgui.setVisible(true);
+ 
         
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        cancel.addActionListener(e -> {
+            SignUpgui.dispose();
+            new WarehouseInventorySystem().Maingui(); 
+        });
+        
+        signUp.addActionListener(e -> {
+            String username = name.getText();
+            String password = new String(pwd.getPassword());
+            String confirmPassword = new String(cpwd.getPassword());
+            String role = (String) box.getSelectedItem();
+
+            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                error.setText("Please fill in all fields.");
+            } else if (!password.equals(confirmPassword)) {
+                error.setText("Passwords do not match.");
+            } else if (uservice.addUser(role.equals("Administrator")
+                    ? new Admin(username, password)
+                    : new Customer(username, password))) {
                 SignUpgui.dispose();
-                new WarehouseInventorySystem().Maingui(); // Reopen the main GUI
-            }
-        });
-        
-        signUp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = name.getText();
-                String password = new String(pwd.getPassword());
-                String confirmPassword = new String(cpwd.getPassword());
-                String role = (String) box.getSelectedItem();
-
-                if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                    error.setText("Please fill in all fields");
-                } else if (!password.equals(confirmPassword)) {
-                    error.setText("Passwords do not match");
-                } else if (isUsernameTaken(username)) {
-                    error.setText("Username is already taken");
-                } else {
-                    User user = createUser(username, password, role);
-                    userService.registerUser(user);
-                    error.setForeground(Color.GREEN);
-                    error.setText("Registration successful!");
-
-                    SignUpgui.dispose(); // Close the sign-up GUI
-                    new WarehouseInventorySystem().Maingui(); // Reopen the main GUI
-                }
+                new Login().LoginGui();
+            } else {
+                error.setText("Username already taken.");
             }
         });
     }
-    
-    private boolean isUsernameTaken(String username) {
-        for (User user : userService.getAllUsers()) {
-            if (user.getUsername().equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-   private User createUser(String username, String password, String role) {
-        Inventory inventory = new Inventory(new FileProductRepository());
-        if (role.equals("Administrator")) {
-            return new Admin(username, password, inventory);
-        } else {
-            return new Customer(username, password, inventory);
-        }
-    } 
 }

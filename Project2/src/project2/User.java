@@ -20,8 +20,6 @@ public abstract class User {
     public boolean verify(String password){
         return this.getPassword().equals(password);
     }
-    
-    public abstract void displayMenu();
 
     /**
      * @return the username
@@ -50,5 +48,4 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 }

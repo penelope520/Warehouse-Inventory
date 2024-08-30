@@ -4,10 +4,21 @@
  */
 package project2;
 
-/**
- *
- * @author Administrator
- */
-public class Admin {
+import javax.swing.*;
+
+public class Admin extends User{
+    public Admin(String username, String password) {
+        super(username, password);
+    }
     
+    public void show(){
+        JFrame adminFrame = new JFrame("Admin Dashboard");
+        JLabel label = new JLabel("Welcome, Admin!");
+        adminFrame.add(label);
+
+        adminFrame.setSize(400, 200);
+        adminFrame.setLocationRelativeTo(null);
+        adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        adminFrame.setVisible(true);
+    }
 }
